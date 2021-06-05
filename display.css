@@ -6,6 +6,34 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 
+ /* === CUSTOM PROPERTIES === */
+
+/* Collecting here to make clear the properties available for overriding
+   (instead of specifying defaults via fallbacks) */
+:root {
+    --hdr--color: black;
+    --hdr--background-color: #f1f1f1;
+    --ftr--color: black;
+    --ftr--background-color: #f1f1f1;
+    --topnav--background-color: #333;
+    --topnav-ddowncont--background-color: #555;
+    --topnav-a--color: #f2f2f2;
+    --btngrp-a-btn--color:black;
+    --btngrp-a-btn--background-color:#c0c0c0;  /* Safari's buttonface color */
+    --top-a-btn-hover--color: black;
+    --top-a-btn-hover--background-color: #ddd;
+    --ddowncont--background-color: #f9f9f9;
+    --ddowncont-a-btn--color: black;
+    --ddowncont-a-btn-hover--color: black;
+    --ddowncont-a-btn-hover--background-color: #dadada;
+    --selected--color: blue;
+    --news--color: #f40000;
+    --input--background-color: #f2f2f2;
+    --placeholder--color: #aaa;
+    --input-focus--border-color: #777;
+    --input-focus--background-color: #fff;
+}
+
 /* === GLOBAL SETTINGS === */
 
 * {
@@ -35,7 +63,8 @@ th, td {
 
 /* Style the header */
 #header {
-    background-color: #f1f1f1;
+    color: var(--hdr--color);
+    background-color: var(--hdr--background-color);
     /* The background image fades under the header.
        Can't set the opacity of a background.  Workaround: start with another
        "image": a gradient from transparent to white and back, covering the
@@ -62,7 +91,8 @@ th, td {
 
 /* Style the footer */
 #footer {
-    background-color: #f1f1f1;
+    color: var(--ftr--color);
+    background-color: var(--ftr--background-color);
     padding: 10px;
     text-align: center;
 }
@@ -72,33 +102,39 @@ th, td {
 
 /* Style the top navigation bar */
 #topnav {
-    background-color: #333;
+    background-color: var(--topnav--background-color);
+}
+
+/* Overrides some of .dropdown-content */
+#topnav .dropdown-content {
+    background-color: var(--topnav-ddowncont--background-color);
 }
 
 /* Style links under topnav */
 #topnav a {
     display: inline-block;
-    color: #f2f2f2;
+    color: var(--topnav-a--color);
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
 }
 
-.button-group button, #clear-filters {
+.button-group a, .button-group button, #clear-filters {
     display: inline-block;
-    background-color: #c0c0c0;  /* Use Safari's buttonface color */
+    color: var(--btngrp-a-btn--color);
+    background-color: var(--btngrp-a-btn--background-color);
     text-align: center;
     padding: 14px 16px;
     border: none;
     border-radius: 4px;
-    margin: 2px 2px;  /* Make explicit Safari's default behavior */
+    margin: 2px;  /* Make explicit Safari's default behavior */
     font-weight: bold;
 }
 
 /* Change link color on hover */
-#topnav a:hover, .button-group button:hover {
-    background-color: #ddd;
-    color: black;
+#topnav a:hover, .button-group a:hover, .button-group button:hover {
+    color: var(--top-a-btn-hover--color);
+    background-color: var(--top-a-btn-hover--background-color);
 }
 
 /* The container <div> to position dropdown content */
@@ -109,42 +145,57 @@ th, td {
 
 /* Style dropdown content (hidden by default) */
 .dropdown-content {
-    display: none;
+    /* Start with the content hidden */
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 1s;
+    -webkit-transition: max-height 1s;
+
     position: absolute;
     /* Place the dropdown content below the trigger.  On my MBP,
        in Chrome, this happens with or without the next two lines
        but in Safari, both are necessary for correct placement. */
     left: 0%;
     top: 100%;
-    background-color: #f9f9f9;
+    background-color: var(--ddowncont--background-color);
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
 }
 
 /* Style links & buttons inside dropdowns;
    overrides some of "#topnav a" and ".button-group button" */
-#topnav .dropdown-content a, .button-group .dropdown-content button {
-    color: black;
+#topnav .dropdown-content a,
+.button-group .dropdown-content a,
+.button-group .dropdown-content button {
     padding: 12px 16px;
     width: 100%;
     text-align: left;
 }
 
+.button-group .dropdown-content a,
+.button-group .dropdown-content button {
+    color: var(--ddowncont-a-btn--color);
+}
+
 /* Change background color of dropdown links & buttons on hover;
    overrides some of "#topnav a:hover, ..." */
 #topnav .dropdown-content a:hover,
+.button-group .dropdown-content a:hover,
 .button-group .dropdown-content button:hover {
-    background-color: #dadada
+    color: var(--ddowncont-a-btn-hover--color);
+    background-color: var(--ddowncont-a-btn-hover--background-color);
 }
 
 /* Show the dropdown menu on hover */
 .dropdown:hover .dropdown-content {
-    display: inline-block;
+    /* Can't transition to height: auto, so use a large max-height; this means
+       that the duration will be shorter and "ease" only works at the top */
+       max-height: 1000px;
 }
 
 /* Style the selected filter (feature and detail) */
 .selected {
-    color: blue;
+    color: var(--selected--color);
     font-style: italic;
     text-decoration: underline;
 }
@@ -157,12 +208,12 @@ th, td {
     padding: 10px;
 }
 
-/* Right column */
-.column.right {
+/* Side column; override if using multiple side columns */
+.column.side {
     width: 35%;
 }
 
-/* Main column */
+/* Main column; overrride if using multiple side columns */
 .column.main {
     width: 65%;
 }
@@ -177,16 +228,21 @@ th, td {
 /* === MAIN CONTENT === */
 
 .news {
-    color: rgb(244, 0, 0);
+    color: var(--news--color);
     font-weight: bold;
 }
 
-/* === IMAGE STYLING IN THE RIGHT COLUMN === */
+/* === IMAGE STYLING IN SIDE COLUMNS === */
 
-.column.right img {
+.column.side img {
     width:100%;
     margin-left: 15px;
     margin-bottom: 15px;
+}
+
+.column.main > img {  /* Don't style category images */
+    height: 200px;
+    float: right;
 }
 
 /* === FORMS & SEARCH === */
@@ -197,7 +253,7 @@ input, select, textarea {
     margin: 5px 10px 10px 0;
     border: 4px solid #aaa;
     border-radius: 6px;
-    background-color: #f2f2f2;
+    background-color: var(--input--background-color);
 
     -webkit-transition: border-color 0.5s, background-color 0.5s;
     transition: border-color 0.5s, background-color 0.5s;
@@ -220,7 +276,7 @@ input[type=submit] {
     padding: 10px 15px;
 }
 
-.column.right input {
+.column.side input {
     padding: 3px 5px;
 }
 
@@ -238,26 +294,26 @@ textarea {
 ::placeholder {  /* Chrome, Firefox, Opera, Safari 10.1+ */
     font-style: italic;
     font-weight: bold;
-    color: #aaa;
+    color: var(--placeholder--color);
     opacity: 1;  /* Firefox */
 }
   
 :-ms-input-placeholder { /* Internet Explorer 10-11 */
     font-style: italic;
     font-weight: bold;
-    color: #aaa;
+    color: var(--placeholder--color);
 }
   
 ::-ms-input-placeholder { /* Microsoft Edge */
     font-style: italic;
     font-weight: bold;
-    color: #aaa;
+    color: var(--placeholder--color);
 }
 
 /* Bring attention to elements in focus */
 input:focus, select:focus, textarea:focus {
-    border-color: #777;
-    background-color: #fff;
+    border-color: var(--input-focus--border-color);
+    background-color: var(--input-focus--background-color);
     outline: none;  /* Remove the default focus effect */
 }
 
@@ -265,7 +321,6 @@ input:focus, select:focus, textarea:focus {
 .slide-down-btn {
     font-size: 18px;
     font-weight: bold;
-    font-family: Serif;
     width: 100%;
     text-align: left;
 }
@@ -332,7 +387,7 @@ input:focus, select:focus, textarea:focus {
 /* Responsive layout for narrow screens */
 @media only screen and (max-width: 600px) {
     /* Stack the two columns; make form inputs full width */
-    .column.right, .column.main, input, textarea, .form-btn {
+    .column.side, .column.main, input, textarea, .form-btn {
         width: 100%;
     }
     #header {
