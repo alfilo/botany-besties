@@ -13,7 +13,14 @@ function ContentDisplay(content, idKeys, opts) {
     // Provide default values.  Consider using Proxy in the future.
     if (!("titleKeys" in opts)) opts.titleKeys = idKeys;
     if (!("titleSep" in opts)) opts.titleSep = " ";
+    if (!("catCol" in opts)) opts.catCol = "main";
+    if (!("detailCol" in opts)) opts.detailCol = "main";
+    if (!("imgCol" in opts)) opts.imgCol = "side";
+    if (!("eventCol" in opts)) opts.eventCol = "side";
     if (!("customFltrMatchers" in opts)) opts.customFltrMatchers = {};
+    if (!("ignoreCats" in opts)) opts.ignoreCats = [];
+    if (!("dropdownCat" in opts)) opts.dropdownCat = false;
+    if (!("detailTable" in opts)) opts.detailTable = false;
     if (!("newTab" in opts)) opts.newTab = false;
     if (!("trackSelection" in opts)) opts.trackSelection = false;
 
@@ -69,7 +76,10 @@ function ContentDisplay(content, idKeys, opts) {
         if (imgOverride) {
             // Array of explicit image titles in XML or string to split in CSV
             var imgTitles = typeof imgOverride === "string" ?
-                imgOverride.split(':') : imgOverride.image;
+                imgOverride.split(':') :
+                (typeof imgOverride.image === "string" ?
+                    // Handle the case of a single image
+                    [imgOverride.image] : imgOverride.image);
             if (imgHandling === imgHandlingEnum.ALL) {
                 // Collect results in a jQuery object for use/modification in callers
                 var $imgs = $();
@@ -203,6 +213,27 @@ function ContentDisplay(content, idKeys, opts) {
                 .text(this.makeItemTitle(item));
         }
 
+        this.makeCategoryHref = function (category, catPathIds) {
+            // Build the link with URL search params recording catPathIds
+            var urlParams = new URLSearchParams();
+            if (opts.contentSrc) {
+                urlParams.set("src", opts.contentSrc);
+            }
+            // Extend catPathIds with curent category's ID
+            catPathIds = catPathIds.concat(makeId(category));
+            for (var j = 0; j < catPathIds.length; j++) {
+                urlParams.append("cat", catPathIds[j]);
+            }
+            // Use contentSrc to make href with new params
+            return opts.contentSrc + ".html?" + urlParams.toString();
+        }
+
+        this.makeCategoryLink = function (category, catPathIds) {
+            return $("<a>").prop("href", this.makeCategoryHref(category, catPathIds))
+                .prop("target", opts.newTab ? "_blank" : "_self")
+                .text(category);
+        }
+
         this.clearSelect = function () {
             selection.clear();
             $("#filter-results input:checkbox:checked").prop("checked", false);
@@ -291,7 +322,10 @@ function ContentDisplay(content, idKeys, opts) {
         // Recursively display the object and all its values; start at heading level 3
         function displayObject(obj, $parent, hLevel = 3) {
             for (var prop in obj) {
-                if (prop.toLowerCase() === "images" || prop.toLowerCase() === "link")
+                if (prop.toLowerCase() === "images" ||
+                    prop.toLowerCase() === "link" ||
+                    prop.toLowerCase() === "category" ||
+                    prop.toLowerCase() === "dates")
                     continue;  // Ignore the images and links here
                 // Skip over tags w/o details or those used in the id or the title
                 if (obj[prop] && !idKeys.includes(prop) && !opts.titleKeys.includes(prop)) {
@@ -302,11 +336,14 @@ function ContentDisplay(content, idKeys, opts) {
                             // Make a paragraph out of prop's value in obj
                             .append($("<p>").text(obj[prop]));
                     } else if (Array.isArray(obj[prop])) {
-                        // Don't make a heading out of prop for arrays
+                        if (prop.toLowerCase() === "when") {
+                            $parent.append($("<h" + hLevel + ">").text("When"));
+                        }
+                        // Don't make a heading out of other props for arrays
                         // It's usually duplicative of the prop higher up
                         displayArray(obj[prop], $parent, hLevel);
                     } else {
-                        if (prop === "html") {
+                        if (prop.toLowerCase() === "html") {
                             // Translate json back to XML and insert (as HTML)
                             $parent.append(opts.x2js.json2xml_str(obj[prop]));
                         } else {
@@ -354,7 +391,7 @@ function ContentDisplay(content, idKeys, opts) {
             }
         }
 
-        this.generate = function (makeTable = false) {
+        this.generate = function () {
             // Find the item requested by search params
             var urlParams = new URLSearchParams(location.search);
             var itemInfo;  // Save the matching object in itemInfo
@@ -372,14 +409,13 @@ function ContentDisplay(content, idKeys, opts) {
             // Make heading out of the displayed item's keys
             $("#header h1").text(links.makeItemTitle(itemInfo));
 
-            if (makeTable) {
+            if (opts.detailTable) {
                 generateTable(itemInfo);
             } else {
                 // Fill in the page: recursively display itemInfo
-                displayObject(itemInfo, $(".column.main"));
+                displayObject(itemInfo, $(".column." + opts.detailCol));
             }
-            // Make image(s) in the right column
-            makeImgs(itemInfo).appendTo($(".column.right"));
+            makeImgs(itemInfo).appendTo($(".column." + opts.imgCol));
         }
     }
 
@@ -431,7 +467,8 @@ function ContentDisplay(content, idKeys, opts) {
             return false;
         }
 
-        this.configureSearch = function (column = "right", staticFilters = {}, dynFltrNames = [], searchKeys = []) {
+        this.configureSearch = function (column = "side",
+            staticFilters = {}, dynFltrNames = [], searchKeys = []) {
             $("#search-" + column).autocomplete({
                 source: function (request, response) {
                     var filters = Object.assign({}, staticFilters);
@@ -494,66 +531,224 @@ function ContentDisplay(content, idKeys, opts) {
     }
 
 
-    /* Category view (image with links on hover) in main column */
-    this.categoryView = new function CategoryView() {
-        this.generate = function () {
-            var $mainColumn = $(".column.main");
+    /* Category handling (topnav category listing and category view) */
+    this.categories = new function Categories() {
+        // Save category path specified so far and make a string version for
+        // easy prefix comparison
+        var urlParams = new URLSearchParams(location.search);
+        var reqCatPath = urlParams.getAll("cat");
+        var reqCatPathStr = reqCatPath.join("/");
+
+        /* Make dropdown list of top-level categories under "catHolder"
+           ignoring any categories in opts.ignoreCats */
+        this.generateTopnavCats = function () {
+            var cats = [];  // Stores top level categories
+            var $catHolder = $("#topnav-cat-holder");
             for (var i = 0; i < content.length; i++) {
-                var category = "category" in content[i] ?
+                var catPaths = "category" in content[i] ?
                     content[i]["category"] : content[i]["Category"];
-                var categoryId = makeId(category);
-                var $categoryUl = $('#' + categoryId);
-                // If we haven't seen this category yet, create an image of this item
-                // and pop-up text (header & link list)
-                if (!$categoryUl.length) {
-                    $categoryUl = $("<ul>").attr("id", categoryId);
-                    // Make only one image
-                    var $img = makeImgs(content[i], imgHandlingEnum.FIRST)
-                        .addClass("cat-img");
-                    $("<div>").addClass("cat-div")
-                        .append($img)
-                        .append($("<div>").addClass("cat-text")
-                            .append($("<h4>").text(category))
-                            .append($categoryUl))
-                        .appendTo($mainColumn);
+                // Handle one or more category paths in current item
+                if (!Array.isArray(catPaths)) {
+                    catPaths = [catPaths];  // Turn into singleton array
                 }
-                // Make link for the item and add to the category list
-                var link = links.makeDetailsLink(content[i]);
-                $("<li>").append(link).appendTo($categoryUl);
+
+                for (var j = 0; j < catPaths.length; j++) {
+                    // Make an array of category elements
+                    var catPath = catPaths[j].split("/");
+                    if (!cats.includes(catPath[0]) &&
+                        !opts.ignoreCats.includes(catPath[0])) {
+                        cats.push(catPath[0]);
+                    }
+                }
+            }
+            cats.sort();  // List categories in alphabetic order
+            for (var i = 0; i < cats.length; i++) {
+                // Only showing top-level links, thus empty required cat path
+                $catHolder.append(links.makeCategoryLink(cats[i], []));
+            }
+        }
+
+        /* Generate category view (image with links on hover) in catCol
+           ignoring any categories in opts.ignoreCats */
+        this.generateCatView = function () {
+            // Stores nextCat links already created for a curCat
+            var nextCatMap = {};
+            var $col = $(".column." + opts.catCol);
+            for (var i = 0; i < content.length; i++) {
+                var catPaths = "category" in content[i] ?
+                    content[i]["category"] : content[i]["Category"];
+                // Handle one or more category paths in current item
+                if (!Array.isArray(catPaths)) {
+                    catPaths = [catPaths];  // Turn into singleton array
+                }
+
+                // Check if at least one item catPath extends reqCatPath
+                catPathsLoop: for (var j = 0; j < catPaths.length; j++) {
+                    // Make arrays of original category elements and their ID
+                    // versions for the current catPath; make a string version
+                    // for easy prefix comparison
+                    var catPath = catPaths[j].split("/");
+                    var catPathIds = catPath.map(function (elt) { return makeId(elt) });
+                    var catPathStr = catPathIds.join("/");
+
+                    // If reqCatPathStr isn't a prefix of catPathStr,
+                    // this path isn't a match for the request
+                    if (!catPathStr.startsWith(reqCatPathStr)) continue;
+                    for (var k = 0; k < catPath.length; k++) {
+                        if (opts.ignoreCats.includes(catPath[k])) {
+                            continue catPathsLoop;
+                        }
+                    }
+
+                    // The current category is the catPath element just past
+                    // reqCatPath, unless the paths are the same; then take
+                    // make a category list/image for the last element
+                    var idx = catPath.length > reqCatPath.length ?
+                        reqCatPath.length : reqCatPath.length - 1;
+                    var curCat = catPath[idx];
+                    var curCatId = catPathIds[idx];
+
+                    var $catHolder = $('#' + curCatId);
+                    // If we haven't processed this category yet, create a
+                    // description, link holder, and image for this item
+                    if (!$catHolder.length) {
+                        // Initialize the tracker for curCat's nextCat entries
+                        nextCatMap[curCat] = [];
+
+                        var $catDiv = $("<div>").addClass("cat-div")
+                            .appendTo($col);
+                        $catHolder = opts.dropdownCat ?
+                            $("<div>").addClass("dropdown-content") : $("<ul>");
+                        $catHolder.attr("id", curCatId);
+                        // Make only one image
+                        var $img = makeImgs(content[i], imgHandlingEnum.FIRST)
+                            .addClass("cat-img");
+                        if (opts.dropdownCat) {
+                            $("<div>").addClass("button-group dropdown")
+                                .append($("<button>")  // Category name
+                                    .attr("type", "button").text(curCat))
+                                .append($catHolder)
+                                .appendTo($catDiv);
+                            $catDiv.append($img);
+                        } else {
+                            $catDiv.append($img)
+                                .append($("<div>").addClass("cat-text")
+                                    .append($("<h4>").text(curCat))
+                                    .append($catHolder));
+                        }
+                    }
+
+                    // Is there another category (after curCat) in catPath?
+                    if (catPath.length > reqCatPath.length + 1) {
+                        var nextCat = catPath[reqCatPath.length + 1];
+                        // Skip if it's already included in curCat's links
+                        if (!nextCatMap[curCat].includes(nextCat)) {
+                            nextCatMap[curCat].push(nextCat);
+                            // Make link for the next category, with
+                            // reqCatPath + curCatId as initial catPathIds
+                            var link = links.makeCategoryLink(nextCat,
+                                reqCatPath.concat(curCatId));
+                            $catHolder.append(opts.dropdownCat ?
+                                link : $("<li>").append(link));
+                        }
+                    } else {
+                        // Make regular details link for the item and add to
+                        // the category list
+                        var link = links.makeDetailsLink(content[i]);
+                        $catHolder.append(opts.dropdownCat ?
+                            link : $("<li>").append(link));
+                    }
+                }
             }
         }
     }
 
 
-    /* Dated activities as links in the right column */
-    this.activities = new function Activities() {
+    /* Events (with dates and, optionally, times) */
+    this.events = new function Events() {
         // Construct Date object out of item for comparisons
-        function makeDate(item) {
-            var stringDate = item["month"] + " " + item["day"] + " " + item["year"];
-            return new Date(stringDate);
+        function setDates(item) {
+            var dateStrs = [];
+            if ("when" in item) {
+                dateStrs = typeof item.when === "string" ?
+                    [item.when] : item.when;
+            } else if ("month" in item && "day" in item && "year" in item) {
+                dateStrs = [item.month + " " + item.day + " " + item.year];
+            }
+            if (!dateStrs.length) return false;
+
+            var dates = [];
+            for (var i = 0; i < dateStrs.length; i++) {
+                var date = new Date(dateStrs[i]);
+                if (isNaN(date)) {
+                    console.error("Invalid date string " + dateStrs[i]);
+                } else {
+                    dates.push(date);
+                }
+            }
+            if (dates.length) {
+                item.dates = dates;
+                return true;
+            }
+            return false;
         }
 
-        // Set up link to next activity in right column:
-        // find content item with the closest date in the future and
-        // make a link to it in the right column
-        this.generateNextActivity = function () {
-            var nextActivityInfo;
-            var today = new Date();
-            for (var i = 0; i < content.length; i++) {
-                var iDate = makeDate(content[i]);
-                if (iDate > today) {
-                    if (nextActivityInfo == null) {
-                        nextActivityInfo = content[i];
-                        continue;
+        // Set up links to upcoming events: find content items with dates
+        // in the future and group by day as lists in eventCol
+        this.generateUpcomingEvents = function () {
+            var now = new Date();
+            // Collect tuples of items paired with each of their dates
+            var events = content.reduce(function (accum, item) {
+                if (setDates(item)) {
+                    for (var i = 0; i < item.dates.length; i++) {
+                        if (item.dates[i] > now) {
+                            accum.push({ item: item, date: item.dates[i] });
+                        }
                     }
-                    var nextActivityDate = makeDate(nextActivityInfo);
-                    if (iDate < nextActivityDate) {
-                        nextActivityInfo = content[i];
+                }
+                return accum;
+            }, []);
+            events.sort(function (a, b) { return a.date - b.date; });
+            var $col = $(".column." + opts.eventCol);
+            var curDs = "";
+            var $ul;
+            for (var i = 0; i < events.length; i++) {
+                var ds = events[i].date.toDateString();
+                // Group time and event info by date
+                if (ds !== curDs) {
+                    $ul = $("<ul>");
+                    curDs = ds;
+                    $col.append($("<h4>").text(ds)).append($ul);
+                }
+                // Use Hours, Minutes, and AM/PM
+                var ts = events[i].date.toLocaleTimeString("en-US",
+                    { hour: "numeric", minute: "numeric" });
+                var $link = links.makeDetailsLink(events[i].item);
+                $("<li>").append(ts + ": ")
+                    .append($link).appendTo($ul);
+            }
+        }
+
+        // Set up link to next event: find content item with the closest date
+        // in the future and make a link to it in eventCol
+        this.generateNextEvent = function () {
+            var nextEventDate, nextEventInfo = null;
+            var now = new Date();
+            for (var i = 0; i < content.length; i++) {
+                if (!setDates(content[i])) continue;
+
+                var dates = content[i].dates;
+                for (var j = 0; j < dates.length; j++) {
+                    if (dates[j] > now &&
+                        (nextEventInfo === null || dates[j] < nextEventDate)) {
+                        nextEventDate = dates[j];
+                        nextEventInfo = content[i];
                     }
                 }
             }
-            if (nextActivityInfo)
-                links.makeDetailsLink(nextActivityInfo).appendTo($(".column.right"));
+            if (nextEventInfo)
+                links.makeDetailsLink(nextEventInfo)
+                    .appendTo($(".column." + opts.eventCol));
         }
     }
 
