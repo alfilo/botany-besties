@@ -194,7 +194,7 @@ th, td {
 }
 
 /* Style the selected filter (feature and detail) */
-.selected {
+.button-group button.selected {
     color: var(--selected--color);
     font-style: italic;
     text-decoration: underline;
