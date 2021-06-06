@@ -53,7 +53,7 @@ function handleXMLContent() {
             contentDisplay.links.generate($ul);
         } else if (location.pathname.includes("recipes.html")) {
             // Create category images that show links on hover
-            contentDisplay.categoryView.generate();
+            contentDisplay.categories.generateCatView();
 
             // Configure autocomplete-based search
             contentDisplay.search.configureSearch();
@@ -61,8 +61,8 @@ function handleXMLContent() {
             // Configure autocomplete-based search for Topics in main column
             contentDisplay.search.configureSearch("main", {"kind" : "Topic:"});
 
-            // Configure autocomplete-based search for Warmups in right column
-            contentDisplay.search.configureSearch("right", {"kind" : "Warmup:"});
+            // Configure autocomplete-based search for Warmups in side column
+            contentDisplay.search.configureSearch("side", {"kind" : "Warmup:"});
         } else {  // meetings.html
             // Set up filters for selecting specific meetings by content
             // Register on-click listener for filter selections
@@ -79,8 +79,8 @@ function handleXMLContent() {
             // (a dropdown) under filter-group
             $("#filter-group div:last-of-type .dropdown-content button:first-child").click();
 
-            // Generate the next meeting's link in the right column
-            contentDisplay.activities.generateNextActivity();
+            // Generate the next meeting's link in the side column
+            contentDisplay.events.generateNextEvent();
         }
     });
 }
