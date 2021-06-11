@@ -1,6 +1,6 @@
 @media only screen and (max-width: 600px) {
-    #header {
-        /* Skip the background image to avoid covering the image with a header */
-        background-image: none;
-    }
+  #header {
+    /* Skip the background image to avoid covering the image with a header */
+    background-image: none;
+  }
 }
