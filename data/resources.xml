@@ -26,8 +26,8 @@
         <kind>Topic:</kind>
         <name>Buggy Day</name>
         <details>What insects are beneficial, and which are considered pests?  For more details,
-        open the speaker notes by clicking on the settings icon in the lower right hand corner
-        of the slideshow.  Then, choose "Open speaker notes".</details>
+        open the speaker notes by clicking on the three dots to the right of the arrows
+        on the bottom of the slideshow.  Then, choose "Open speaker notes".</details>
         <html>
             <div style="position: relative; width: 100%; height: 0; padding-top: 60%;">
                 <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vQlHelDz5HiJmOOO9uUX46NMuJrIGd9r3wBEypm1LK77BPWTXb_EAnDUok9lkB1p4OeX2GnOyM0aZO9/embed?delayms=3000"
@@ -88,8 +88,8 @@
         <name>An Edible End of the Year Review</name>
         <details>It's the last meeting of the year, so we decided to review all we've
         learned so far with a little holiday treat. For more details,
-        open the speaker notes by clicking on the settings icon in the lower right hand corner
-        of the slideshow.  Then, choose "Open speaker notes".</details>
+        open the speaker notes by clicking on the three dots to the right of the arrows
+        on the bottom of the slideshow.  Then, choose "Open speaker notes".</details>
         <html>
             <div style="position: relative; width: 100%; height: 0; padding-top: 60%;">
                 <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vRi95_EGb9l8b4YQdhomQylMco5bSby42_HTANJju2sJlanPdsqmydEdsdOtELNbTyLrH_PPDiYe8cZ/embed?delayms=3000"
@@ -171,8 +171,8 @@
         <kind>Topic:</kind>
         <name>Soil pH</name>
         <details>Soil pH is very important for plants. For more details,
-        open the speaker notes by clicking on the settings icon in the lower right hand corner
-        of the slideshow.  Then, choose "Open speaker notes".</details>
+        open the speaker notes by clicking on the three dots to the right of the arrows
+        on the bottom of the slideshow.  Then, choose "Open speaker notes".</details>
         <html>
             <div style="position: relative; width: 100%; height: 0; padding-top: 60%;">
                 <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vSvLB9QtATJTS1x-7UeHJlZ5eCm6-nYbU8CCty2J-z3AejcRv3IL19yPbsS0cvwX0Yj7xte5ljaDX_6/embed?delayms=3000"
@@ -190,11 +190,42 @@
         <kind>Topic:</kind>
         <name>Plant Propagation</name>
         <details>How can we make more plants?  We can propagate them.  For more details,
-        open the speaker notes by clicking on the settings icon in the lower right hand corner
-        of the slideshow.  Then, choose "Open speaker notes".</details>
+        open the speaker notes by clicking on the three dots to the right of the arrows
+        on the bottom of the slideshow.  Then, choose "Open speaker notes".</details>
         <html>
             <div style="position: relative; width: 100%; height: 0; padding-top: 60%;">
                 <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vSVNm0VF0goDYQYFE8SzQmoiARptixSxzkylogsKTZfUTBBtR04J7pFtRhfPpZeg9H43garSz-alLDi/embed?delayms=3000"
+                        style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; border: 0;"
+                        allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+            </div>
+        </html>
+    </resource>
+    <resource>
+        <kind>Topic:</kind>
+        <name>Writing a Scientific Paper</name>
+        <details>For the 4-H Fair this year (in 2021), we are going to make a poster
+        on propagation.  We'll use the guidelines for writing a scientific paper to
+        guide our poster.  For more details, open the speaker notes by clicking on
+        the three dots to the right of the arrows on the bottom of the slideshow. 
+        Then, choose "Open speaker notes".</details>
+        <html>
+            <div style="position: relative; width: 100%; height: 0; padding-top: 60%;">
+                <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vTYamgmmmvd4sPxoa872e4UzyREhF6mReyIVruea1bu589iO4TLjtzq4E5Vz5BG9dK9xiHYrELJuoX8/embed?delayms=3000"
+                        style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; border: 0;"
+                        allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+            </div>
+        </html>
+    </resource>
+    <resource>
+        <kind>Topic:</kind>
+        <name>Green Roofs</name>
+        <details>We plan on making modular boxes to create a green roof at the 4-H Acres. 
+        For more details, open the speaker notes by clicking on the three dots to the
+        right of the arrows on the bottom of the slideshow.  Then, choose "Open speaker
+        notes".</details>
+        <html>
+            <div style="position: relative; width: 100%; height: 0; padding-top: 60%;">
+                <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vTaxYklYLaTD_Eirh8uyZgxlqa6EArOlLvJlekUqTK0HVjF_YaNOOVuj7WrCjYoEveIP2kjyYJzNT_G/embed?delayms=3000"
                         style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; border: 0;"
                         allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
             </div>
