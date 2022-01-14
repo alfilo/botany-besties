@@ -247,6 +247,24 @@
         </html>
     </resource>
     <resource>
+        <kind>Topic:</kind>
+        <name>Hydroponics</name>
+        <details>We learned all about hydroponics from a professor at Cornell.  Take
+        a look at the slideshow and document below to see what we learned!</details>
+        <html>
+            <div style="position: relative; width: 100%; height: 0; padding-top: 60%;">
+                <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vQBTSg5NUpLVYIFpYv0X0rWF96iHUezpa2qdQBLLDfsORKNFrZpNKtWACVPaTAbjQ/embed?delayms=3000"
+                        style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; border: 0;"
+                        allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+            </div>
+            <div style="position: relative; width: 100%; height: 0; padding-top: 60%;">
+                <iframe src="https://docs.google.com/document/d/e/2PACX-1vTSOmeVXStDoBKDAZvGHpjSg4PiGBLU8iU_LLwRJ4VqHAZLLOX2t5D20cojBHtAZk4ohf3IEOaulVz7/pub?embedded=true"
+                        style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; border: 0;"
+                        allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+            </div>
+        </html>
+    </resource>
+    <resource>
         <kind>Warmup:</kind>
         <name>Sprouting Letters</name>
         <summary>For our warmup this month, we unscrambled veggies with our bodies.
