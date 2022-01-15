@@ -55,7 +55,7 @@ table {
 th,
 td {
   border: 1px solid #ddd;
-  padding: 5px 10px 5px 10px;
+  padding: 5px 10px;
   text-align: left;
 }
 
@@ -75,7 +75,7 @@ td {
          linear-gradient(rgba(255,255,255,.4), rgba(255,255,255,.4)) */
   background-image:
     linear-gradient(to right, transparent, white 25% 75%, transparent),
-    url(../images/default.png);
+    url("../images/default.png");
   background-repeat: no-repeat, repeat-x;
 
   /* Two images:  Linear Gradient covers (header) and doesn't repeat.
@@ -121,7 +121,7 @@ td {
   left: 0%;
   top: 100%;
   background-color: var(--ddowncont--background-color);
-  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 16px 0 rgb(0 0 0 / 20%);
   z-index: 1;
 }
 
@@ -247,7 +247,6 @@ td {
 
 .column.main > img {  /* Don't style category images */
   height: 200px;
-  float: right;
 }
 
 /* === FORMS & SEARCH === */
@@ -268,14 +267,14 @@ textarea {
 /* Override or refine settings for some form elements */
 
 /* These also override the responsive section's "input" */
-input[type=submit],
-input[type=checkbox],
+input[type="submit"],
+input[type="checkbox"],
 select {
   width: initial;
 }
 
 /* Make the button stand out a bit */
-input[type=submit] {
+input[type="submit"] {
   font-weight: bold;
 }
 
