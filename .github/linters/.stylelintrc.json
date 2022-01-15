@@ -1,6 +1,14 @@
 {
   "extends": "stylelint-config-standard",
   "rules": {
-    "no-descending-specificity": [true, { "ignore": ["selectors-within-list"] }]
+    "custom-property-pattern": [
+      "^([a-z][a-z0-9]*)(-{1,2}[a-z0-9]+)*$",
+      {
+        "message": "Custom properties must be kebab-case"
+      }
+    ],
+    "no-descending-specificity": [true, { "ignore": ["selectors-within-list"] }],
+    "property-no-vendor-prefix": null,
+    "selector-no-vendor-prefix": null
   }
 }
