@@ -265,6 +265,25 @@
         </html>
     </resource>
     <resource>
+        <kind>Topic:</kind>
+        <name>How to Identify a Conifer</name>
+        <details>Two of our members did presentations on conifers and how to identify them. 
+        Take a look at the slideshows below to see what we learned!  Click the three dots
+        on the bottom of the slideshow and choose "Open Speaker Notes" to see what was said.</details>
+        <html>
+            <div style="position: relative; width: 100%; height: 0; padding-top: 60%;">
+                <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vQTIa2Y9q6IV708Uw9rFUEKtsi3P_-jbYi5Zw5gR_zh-WcRwZcN_qfXqzCip5p54WIQrg4vHIgygHUE/embed?delayms=3000"
+                        style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; border: 0;"
+                        allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+            </div>
+            <div style="position: relative; width: 100%; height: 0; padding-top: 60%;">
+                <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vTltc8KiqOkcTBJzz64BuFiIzNMmzFkR7ZGMbOZ_QPhOp3E9FhUoOECoFhcVYC-q2hRHoHDfglpiShS/embed?delayms=3000"
+                        style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; border: 0;"
+                        allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+            </div>
+        </html>
+    </resource>
+    <resource>
         <kind>Warmup:</kind>
         <name>Sprouting Letters</name>
         <summary>For our warmup this month, we unscrambled veggies with our bodies.
