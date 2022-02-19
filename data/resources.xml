@@ -284,6 +284,27 @@
         </html>
     </resource>
     <resource>
+        <kind>Topic:</kind>
+        <name>Winter Indoor Container Gardening</name>
+        <details>Wouldn't it be great to be able to grow veggies indoors during the winter?
+        Well, turns out we can!  Take a look at the slideshow and document below to
+        see what's important to consider when growing indoor veggies, how we planted
+        them, and how we plan to care for them!  Click the three dots on the bottom
+        of the slideshow and choose "Open Speaker Notes" to see what was said.</details>
+        <html>
+            <div style="position: relative; width: 100%; height: 0; padding-top: 60%;">
+                <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vRcuzAaWMWheX5BvSUXEkKgMtFykFLjx9e2r09daw4gHotQWlhs9RcnUrzdvyPHV0oLj7giJf2Kucxh/embed?delayms=3000"
+                        style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; border: 0;"
+                        allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+            </div>
+            <div style="position: relative; width: 100%; height: 0; padding-top: 60%;">
+                <iframe src="https://docs.google.com/document/d/e/2PACX-1vT1x8NHujcdleP8c9TAOPlJ9sX4DlTtAx2OIndvvxiRgqtHvC3-6mrG8AdUswx7DkWh6otxlLSxSOSG/pub?embedded=true"
+                        style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; border: 0;"
+                        allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+            </div>
+        </html>
+    </resource>
+    <resource>
         <kind>Warmup:</kind>
         <name>Sprouting Letters</name>
         <summary>For our warmup this month, we unscrambled veggies with our bodies.
