@@ -398,7 +398,6 @@ textarea:focus {
 /* On category hover, make image less opaque and pop up category text */
 .cat-div:hover .cat-img {
   opacity: 0.4;
-  filter: alpha(opacity=40);  /* For IE8 and earlier */
 }
 
 .cat-div:hover .cat-text {
