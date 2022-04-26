@@ -204,9 +204,9 @@ function ContentDisplay(content, idKeys, opts) {
   this.links = new (function Links() {
     var filteredContent = [];
     var selection = new Selection();
-    this.makeDetailsHref = function (item) {
+    this.makeDetailsHref = function (item, extraUSPs = {}) {
       // Build the link with URL search params out of item's idKeys values
-      var urlParams = new URLSearchParams();
+      var urlParams = new URLSearchParams(extraUSPs);
       if (opts.contentSrc) {
         urlParams.set("src", opts.contentSrc);
       }
@@ -224,16 +224,16 @@ function ContentDisplay(content, idKeys, opts) {
       return title.slice(0, -opts.titleSep.length);
     };
 
-    this.makeDetailsLink = function (item) {
+    this.makeDetailsLink = function (item, extraUSPs = {}) {
       return $("<a>")
-        .prop("href", this.makeDetailsHref(item))
+        .prop("href", this.makeDetailsHref(item, extraUSPs))
         .prop("target", opts.newTab ? "_blank" : "_self")
         .text(this.makeItemTitle(item));
     };
 
-    this.makeCategoryHref = function (category, catPathIds) {
+    this.makeCategoryHref = function (category, catPathIds, extraUSPs = {}) {
       // Build the link with URL search params recording catPathIds
-      var urlParams = new URLSearchParams();
+      var urlParams = new URLSearchParams(extraUSPs);
       if (opts.contentSrc) {
         urlParams.set("src", opts.contentSrc);
       }
@@ -246,9 +246,9 @@ function ContentDisplay(content, idKeys, opts) {
       return opts.contentSrc + ".html?" + urlParams.toString();
     };
 
-    this.makeCategoryLink = function (category, catPathIds) {
+    this.makeCategoryLink = function (category, catPathIds, extraUSPs = {}) {
       return $("<a>")
-        .prop("href", this.makeCategoryHref(category, catPathIds))
+        .prop("href", this.makeCategoryHref(category, catPathIds, extraUSPs))
         .prop("target", opts.newTab ? "_blank" : "_self")
         .text(category);
     };
@@ -341,12 +341,14 @@ function ContentDisplay(content, idKeys, opts) {
     function displayObject(obj, $parent, hLevel = 3) {
       for (var prop in obj) {
         if (
-          prop.toLowerCase() === "images" ||
-          prop.toLowerCase() === "link" ||
-          prop.toLowerCase() === "category" ||
-          prop.toLowerCase() === "dates"
+          ["images", "link", "category", "when", "dates"].includes(
+            prop.toLowerCase()
+          )
         )
-          continue; // Ignore the images and links here
+          // Ignore images, links, categories, and dates/times here
+          // Dates/times are printed out by generate
+          continue;
+
         // Skip over tags w/o details or those used in the id or the title
         if (
           obj[prop] &&
@@ -360,9 +362,6 @@ function ContentDisplay(content, idKeys, opts) {
               // Make a paragraph out of prop's value in obj
               .append($("<p>").text(obj[prop]));
           } else if (Array.isArray(obj[prop])) {
-            if (prop.toLowerCase() === "when") {
-              $parent.append($("<h" + hLevel + ">").text("When"));
-            }
             // Don't make a heading out of other props for arrays
             // It's usually duplicative of the prop higher up
             displayArray(obj[prop], $parent, hLevel);
@@ -440,8 +439,28 @@ function ContentDisplay(content, idKeys, opts) {
       if (opts.detailTable) {
         generateTable(itemInfo);
       } else {
+        var $parent = $(".column." + opts.detailCol);
+        // Print out dates/times, if they come from "when" prop(s)
+        if ("when" in itemInfo) {
+          $parent.append($("<h3>").text("When"));
+          var $ul = $("<ul>").appendTo($parent);
+          var dates = schedule.getDates(itemInfo);
+          for (var i = 0; i < dates.length; i++) {
+            if (
+              // If displaying a prior year's events, print all dates/times
+              // When displaying this year's events, ignore older dates/times
+              schedule.getPageYear() !== new Date().getFullYear() ||
+              schedule.getPageYear() === dates[i].getFullYear()
+            ) {
+              var $li = $("<li>").appendTo($ul);
+              $li.text(
+                dates[i].toDateString() + " " + dates[i].toLocaleTimeString()
+              );
+            }
+          }
+        }
         // Fill in the page: recursively display itemInfo
-        displayObject(itemInfo, $(".column." + opts.detailCol));
+        displayObject(itemInfo, $parent);
       }
       makeImgs(itemInfo).appendTo($(".column." + opts.imgCol));
     };
@@ -593,6 +612,10 @@ function ContentDisplay(content, idKeys, opts) {
       var cats = []; // Stores top level categories
       var $catHolder = $("#topnav-cat-holder");
       for (var i = 0; i < content.length; i++) {
+        // Build topnav categories using only this year's events
+        // (and non-scheduled activities)
+        if (!schedule.showInYear(content[i])) continue;
+
         var catPaths = getCatPaths(i);
 
         for (var j = 0; j < catPaths.length; j++) {
@@ -619,7 +642,13 @@ function ContentDisplay(content, idKeys, opts) {
       // Stores nextCat links already created for a curCat
       var nextCatMap = {};
       var $col = $(".column." + opts.catCol);
+
+      var pageYear = schedule.getPageYear();
       for (var i = 0; i < content.length; i++) {
+        // Build category view using only the requested year's events
+        // (and non-scheduled activities)
+        if (!schedule.showInYear(content[i], pageYear)) continue;
+
         var catPaths = getCatPaths(i);
 
         // Check if at least one item catPath extends reqCatPath
@@ -701,7 +730,8 @@ function ContentDisplay(content, idKeys, opts) {
               // reqCatPath + curCatId as initial catPathIds
               var link = links.makeCategoryLink(
                 nextCat,
-                reqCatPath.concat(curCatId)
+                reqCatPath.concat(curCatId),
+                { year: pageYear }
               );
               $catHolder.append(
                 opts.dropdownCat ? link : $("<li>").append(link)
@@ -710,7 +740,7 @@ function ContentDisplay(content, idKeys, opts) {
           } else {
             // Make regular details link for the item and add to
             // the category list
-            var link = links.makeDetailsLink(content[i]);
+            var link = links.makeDetailsLink(content[i], { year: pageYear });
             $catHolder.append(opts.dropdownCat ? link : $("<li>").append(link));
           }
         }
@@ -718,8 +748,15 @@ function ContentDisplay(content, idKeys, opts) {
     };
   })();
 
-  /* Events (with dates and, optionally, times) */
-  this.events = new (function Events() {
+  /* Scheduling helper functions */
+  this.schedule = new (function Schedule() {
+    this.getPageYear = function () {
+      var urlParams = new URLSearchParams(location.search);
+      // If not specified in URLSearchParams, use current year
+      // Convert from string to number (needed for URL param only)
+      return (urlParams.get("year") || new Date().getFullYear()) * 1;
+    };
+
     // Construct Date object out of item for comparisons
     function setDates(item) {
       var dateStrs = [];
@@ -746,16 +783,22 @@ function ContentDisplay(content, idKeys, opts) {
       return false;
     }
 
-    // Set up links to upcoming events: find content items with dates
-    // in the future and group by day as lists in eventCol
-    this.generateUpcomingEvents = function () {
+    // Compute dates for item, if not done yet, and cache results
+    this.getDates = function (item) {
+      // Check for precomputed dates in item first
+      return ("dates" in item && item.dates) || (setDates(item) && item.dates);
+    };
+
+    // Return information about events that happen in the future:
+    // array of objects pairing items with each of their future dates/times
+    this.getUpcomingEvents = function () {
       var now = new Date();
-      // Collect tuples of items paired with each of their dates
       var events = content.reduce(function (accum, item) {
-        if (setDates(item)) {
-          for (var i = 0; i < item.dates.length; i++) {
-            if (item.dates[i] > now) {
-              accum.push({ item: item, date: item.dates[i] });
+        var dates = schedule.getDates(item);
+        if (dates) {
+          for (var i = 0; i < dates.length; i++) {
+            if (dates[i] > now) {
+              accum.push({ info: item, date: dates[i] });
             }
           }
         }
@@ -764,9 +807,71 @@ function ContentDisplay(content, idKeys, opts) {
       events.sort(function (a, b) {
         return a.date - b.date;
       });
+      return events;
+    };
+
+    // Return the nearest future event: an object paring an item with
+    // the upcoming date/time
+    this.getNextEvent = function () {
+      var nextEventDate,
+        nextEventInfo = null;
+      var now = new Date();
+      for (var i = 0; i < content.length; i++) {
+        var dates = this.getDates(content[i]);
+        if (!dates) continue;
+
+        for (var j = 0; j < dates.length; j++) {
+          if (
+            dates[j] > now &&
+            (nextEventInfo === null || dates[j] < nextEventDate)
+          ) {
+            nextEventDate = dates[j];
+            nextEventInfo = content[i];
+          }
+        }
+      }
+      return { info: nextEventInfo, date: nextEventDate };
+    };
+
+    // Should item be shown in year (defaults to this year)?
+    // It should, if it's a non-scheduled item (no dates/times)
+    // or it has at least one date/time in the requested year
+    this.showInYear = function (item, year = new Date().getFullYear()) {
+      var dates = this.getDates(item);
+      // Always show information without a date
+      if (!dates) return true;
+
+      for (var i = 0; i < dates.length; i++) {
+        if (dates[i].getFullYear() === year) {
+          return true;
+        }
+      }
+      return false;
+    };
+  })();
+
+  // Save property in a variable for local use
+  var schedule = this.schedule;
+
+  /* Events (with dates and, optionally, times) */
+  this.events = new (function Events() {
+    // Set up links to upcoming events: find content items with dates
+    // in the future and group by day as lists in eventCol
+    this.generateUpcomingEvents = function () {
       var $col = $(".column." + opts.eventCol);
       var curDs = "";
       var $ul;
+      var events = schedule.getUpcomingEvents();
+      if (
+        // Show thank-you note if either:
+        // - There are no future events
+        // - Requested year is in the past
+        !events.length ||
+        schedule.getPageYear() !== new Date().getFullYear()
+      ) {
+        $col.load("load.html #thank-you");
+        return;
+      }
       for (var i = 0; i < events.length; i++) {
         var ds = events[i].date.toDateString();
         // Group time and event info by date
@@ -780,7 +885,7 @@ function ContentDisplay(content, idKeys, opts) {
           hour: "numeric",
           minute: "numeric",
         });
-        var $link = links.makeDetailsLink(events[i].item);
+        var $link = links.makeDetailsLink(events[i].info);
         $("<li>")
           .append(ts + ": ")
           .append($link)
@@ -791,26 +896,10 @@ function ContentDisplay(content, idKeys, opts) {
     // Set up link to next event: find content item with the closest date
     // in the future and make a link to it in eventCol
     this.generateNextEvent = function () {
-      var nextEventDate,
-        nextEventInfo = null;
-      var now = new Date();
-      for (var i = 0; i < content.length; i++) {
-        if (!setDates(content[i])) continue;
-
-        var dates = content[i].dates;
-        for (var j = 0; j < dates.length; j++) {
-          if (
-            dates[j] > now &&
-            (nextEventInfo === null || dates[j] < nextEventDate)
-          ) {
-            nextEventDate = dates[j];
-            nextEventInfo = content[i];
-          }
-        }
-      }
-      if (nextEventInfo)
+      var nextEvent = schedule.getNextEvent();
+      if (nextEvent.info)
         links
-          .makeDetailsLink(nextEventInfo)
+          .makeDetailsLink(nextEvent.info)
           .appendTo($(".column." + opts.eventCol));
     };
   })();
