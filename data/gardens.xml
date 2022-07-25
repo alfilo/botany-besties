@@ -17,7 +17,7 @@
             <image>Baby Bunny Buffet July 15, 2020 C</image>   
         </images>
     </garden>
-     <garden>
+    <garden>
         <name>Pine Tree Garden</name>
         <images>
             <image>Pine Tree Garden June 4, 2020</image>
@@ -25,8 +25,38 @@
             <image>Pine Tree Garden July 18, 2020</image>
         </images>
     </garden>
-     <garden>
+    <garden>
         <name>Stick and Stone</name>
         <description>Coming soon...</description>
+    </garden>
+    <garden>
+        <name>Arbor Garden</name>
+        <location>Tompkins County 4-H Acres</location>
+        <description>This perennial garden was designed, planted
+        and maintained by a youth 4-H member of the Botany Besties
+        4-H Club.  The purpose of the garden is to attract and
+        support pollinators including bees, hummingbirds, and
+        especially butterflies.
+        Many of the plants in the garden are native to the area.
+        The flowers planted in the garden will bloom from early
+        May until the first frost in October allowing for a long
+        and continuous season of blooms.
+        The plants have been integrated to create a large, visible
+        swath to attract the pollinators.  The larger the area of
+        blooms, the more motivated the pollinators will be to come
+        visit the garden.
+        Look carefully and enjoy!
+        There are host plants for caterpillars in the garden.  Say
+        hi to the critters, but leave them in their home to grow
+        healthy and strong.
+        Submit pictures of the critters you discover in the garden:
+        wsthokal@gmail.com
+        The Botany Besties 4-H Club would love to hear from you!
+        </description>
+        <images>
+            <image>Arbor garden Second Season June</image>
+            <image>Arbor Garden End of First Season</image>
+            <image>Arbor Garden First Season</image>
+        </images>
     </garden>
 </gardens>
