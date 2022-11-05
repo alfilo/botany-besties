@@ -305,6 +305,21 @@
         </html>
     </resource>
     <resource>
+        <kind>Topic:</kind>
+        <name>The Terrific Trail Tour at Two</name>
+        <details>Have you ever walked through a forest and wondered what makes it healthy?
+        Mr. Schaufler taught us about this topic during a trail tour at the 4-H Acres
+        Nature Trail.  For more information, click on the three dots and choose "Speaker
+        Notes".</details>
+        <html>
+            <div style="position: relative; width: 100%; height: 0; padding-top: 60%;">
+                <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vQRpA1OMEDOha0FuFQYQGv-rWyyF9gbGnzY1Ht4ZF9_GAdjbQAX7Pk66qBK-R6EoL6N88DXUSaZ7pjy/embed?delayms=3000"
+                        style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; border: 0;"
+                        allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+            </div>
+        </html>
+    </resource>
+    <resource>
         <kind>Warmup:</kind>
         <name>Sprouting Letters</name>
         <summary>For our warmup this month, we unscrambled veggies with our bodies.
