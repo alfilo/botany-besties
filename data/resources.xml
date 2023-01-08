@@ -320,6 +320,35 @@
         </html>
     </resource>
     <resource>
+        <kind>Topic:</kind>
+        <name>Lighting Up Our Ideas</name>
+        <details>We reviewed everything we've learned over the year with a light-up matching
+        game, powered by produce batteries.  To learn more about how this works, take a look
+        at the resources and meeting materials below.</details>
+        <html>
+            <div style="position: relative; width: 100%; height: 0; padding-top: 60%;">
+                <iframe src="https://docs.google.com/document/d/e/2PACX-1vT0lGOIGnI7bfRVHvWRhL4vj9sgGNTa6fYUv4rn9sR71vtt0CcjqXzbpMRZNd3WLMTq28RUzZvm0elo/pub?embedded=true"
+                        style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; border: 0;"
+                        allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+            </div>
+            <div style="position: relative; width: 100%; height: 0; padding-top: 60%;">
+                <iframe src="https://docs.google.com/document/d/e/2PACX-1vQ-uhYWiRVeAjI38DlGDEc8cK3yC5qhiD5zAeWacd-id2X0makoJhnocJKKDG9qLmq89KpXbYjm1sdd/pub?embedded=true"
+                        style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; border: 0;"
+                        allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+            </div>
+            <div style="position: relative; width: 100%; height: 0; padding-top: 60%;">
+                <iframe src="https://docs.google.com/document/d/e/2PACX-1vRmYDR8oYCIWijhwIT1i7rPvAhfaHnn6jmlD2b3nhwbHiGnA_x_zi6LuqwIlOqUn0Q1tf0oZ6mxKVwe/pub?embedded=true"
+                        style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; border: 0;"
+                        allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+            </div>
+            <div style="position: relative; width: 100%; height: 0; padding-top: 60%;">
+                <iframe src="https://docs.google.com/document/d/e/2PACX-1vS0To9uH1SGxUfJMznkEdgmKbzX45CLCpVs40bjfH_YXBL3DUBWibse7VGQbCpygIf4Hq3zXSmRMivL/pub?embedded=true"
+                        style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; border: 0;"
+                        allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+            </div>
+        </html>
+    </resource>
+    <resource>
         <kind>Warmup:</kind>
         <name>Sprouting Letters</name>
         <summary>For our warmup this month, we unscrambled veggies with our bodies.
