@@ -349,6 +349,29 @@
         </html>
     </resource>
     <resource>
+        <kind>Topic:</kind>
+        <name>Germination Experiment</name>
+        <details>We set up a germination experiment at our January meeting, after learning all about
+        germination, how it works, and why it works.  To see how to set up the germination experiment,
+        check out the video below!</details>
+        <html>
+            <div style="position: relative; width: 100%; height: 0; padding-top: 60%;">
+                <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vRInd73GzDo1YXZV_uoV5h4Q2rOr7UHaYfv04Mv4gA6noYuH0AutnhkgRzfQLWkjFCPXhyQq2RaBhvT/embed?delayms=3000"
+                        style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; border: 0;"
+                        allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+            </div>
+            <div style="position: relative; width: 100%; height: 0; padding-top: 60%;">
+                <iframe src="https://www.youtube.com/embed/Ts6rnIB93Hs"
+                        title="YouTube video player of Germination Experiment"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; border: 0;"
+                        allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true">
+                </iframe>
+            </div>
+        </html>
+    </resource>
+    <resource>
         <kind>Warmup:</kind>
         <name>Sprouting Letters</name>
         <summary>For our warmup this month, we unscrambled veggies with our bodies.
