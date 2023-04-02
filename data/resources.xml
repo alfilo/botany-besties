@@ -372,6 +372,31 @@
         </html>
     </resource>
     <resource>
+        <kind>Topic:</kind>
+        <name>Responsible Production and Consumption</name>
+        <details>We learned about consumption and production during our meeting, and the damage
+        it can cause.  We also figured out how we can minimize, or even remove, the effects of
+        production.  To see how we can do this, take a look at the slideshow!  Also, the
+        video below describes the process of making silk that we were unable to show during
+        the slideshow.</details>
+        <html>
+            <div style="position: relative; width: 100%; height: 0; padding-top: 60%;">
+                <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vQPQ6x25AQ2ayrzZ2-BFxw4fBBNfOOOgzOpRa2RE9Z-56VAwr5zKXLoxnHg4cKDJ-Lcay-43FSw16_W/embed?delayms=3000"
+                        style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; border: 0;"
+                        allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+            </div>
+            <div style="position: relative; width: 100%; height: 0; padding-top: 60%;">
+                <iframe src="https://www.youtube.com/embed/t9FnPYPkgng"
+                        title="YouTube video player of silk production"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; border: 0;"
+                        allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true">
+                </iframe>
+            </div>
+        </html>
+    </resource>
+    <resource>
         <kind>Warmup:</kind>
         <name>Sprouting Letters</name>
         <summary>For our warmup this month, we unscrambled veggies with our bodies.
