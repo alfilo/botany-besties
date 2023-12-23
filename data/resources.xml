@@ -437,6 +437,45 @@
         </html>
     </resource>
     <resource>
+        <kind>Topic:</kind>
+        <name>LaDue Gardens Tour</name>
+        <details>We toured a beatiful collection of perennial gardens at Mr. Eddy
+        LaDue's property and learned about important design aspects of his gardens.</details>
+        <html>
+            <div style="position: relative; width: 100%; height: 0; padding-top: 60%;">
+                <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vQ-CCLhNG-j-bO12vurubx7gjVsNozLQLWZRnzBomWrRvjqu_aoqCZl-mLFoukA95BA4eY6GjPq5F0X/embed?delayms=3000"
+                        style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; border: 0;"
+                        allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+            </div>
+        </html>
+    </resource>
+    <resource>
+        <kind>Topic:</kind>
+        <name>Roy H. Park Reserve</name>
+        <details>We took a walk on the Roy H. Park Reserve in Freeville to learn
+        about some common trees and fun facts about each of them.</details>
+        <html>
+            <div style="position: relative; width: 100%; height: 0; padding-top: 60%;">
+                <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vTNtKt7Tm3rGHLQTj8gJUBroT5C682OiVkqD1nwhSwl3cfq_3resTKVSc7hsL0ZujszsoSKgxhIcgy8/embed?delayms=3000"
+                        style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; border: 0;"
+                        allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+            </div>
+        </html>
+    </resource>
+    <resource>
+        <kind>Topic:</kind>
+        <name>Soil pH for Younger Audience</name>
+        <details>We learned all about how soil pH works, what it affects, and
+        how to measure it using color-changing pH indicators we can make at home.</details>
+        <html>
+            <div style="position: relative; width: 100%; height: 0; padding-top: 60%;">
+                <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vQVAAoad_9qnddbgzXMgindvoY3i5aRHOeDNQOYFoF1HW6WP139po8QxW_nwD5mALhv-BvOrCeTwQmz/embed?delayms=3000"
+                        style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; border: 0;"
+                        allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+            </div>
+        </html>
+    </resource>
+    <resource>
         <kind>Warmup:</kind>
         <name>Sprouting Letters</name>
         <summary>For our warmup this month, we unscrambled veggies with our bodies.

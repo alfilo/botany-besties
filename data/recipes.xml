@@ -43,6 +43,74 @@
         </directions>
     </recipe>
     <recipe>
+        <name>Pizza</name>
+        <category>Main Course</category>
+        <ingredients>
+            <serving-size>This recipe serves four people, with some leftovers.</serving-size>
+            <crust>
+                <ingredient>1 cup water or milk, heated (the dough will rise more with milk)</ingredient>
+                <ingredient>1 large egg</ingredient>
+                <ingredient>2 tbsp olive oil (this is optional, but it tastes much better)</ingredient>
+                <ingredient>2 tbsp sugar (in my experience, honey will make the dough rise best)</ingredient>
+                <ingredient>3 cups flour</ingredient>
+                <ingredient>2.5 tbsp yeast</ingredient>
+                <ingredient>1 tbsp herbs (we use Frozen Pizza seasoning or Bouquet Garni)</ingredient>
+                <ingredient>1 tsp salt</ingredient>
+            </crust>
+            <topping>
+                <ingredient>Pasta sauce (however much you like)</ingredient>
+                <ingredient>Shredded mozzarella cheese (again, however much you like)</ingredient>
+                <ingredient>Assorted vegetables and herbs, to taste</ingredient>
+            </topping>
+        </ingredients>
+        <directions>
+            <crust>
+                <direction>If you're using a breadmaker, let the breadmaker stir the
+                pizza until the ball is fully kneaded.  Pull the dough ball out before
+                it rises in the container (we'll do this in the pizza pan instead).</direction>
+                <direction>If you're not using a breadmaker, follow the directions below:</direction>
+                <d>Mix the salt, herbs, and flower together well in a large bowl.</d>
+                <d>In a separate bowl, I like to use a medium-sized soup bowl, mix the
+                water or milk, sugar, and yeast together, and let the yeast puff up (it
+                should take 15-20 minutes, but if your yeast is more active and starts
+                going over the edge of your bowl, feel free to continue sooner).</d>
+                <d>Stir the egg and oil into the flour mixture until it's even.</d>
+                <d>Preheat the oven to 350ºF (this way, there's enough time for it
+                to heat fully before the dough needs to rise).</d>
+                <d>Once the yeast is ready, combine the yeast starter mixture into
+                the flour mixture, kneading until it's well-combined.  The dough should
+                be even, with no lumps, and silky.</d>
+                <d>Divide the crust into four even parts and stretch into whatever shape
+                pie pan you have.  Pretty much any pans work, though we tend to use
+                9x13 inch glass pans, pie pans, and 8x8 glass pans the most.</d>
+                <d>Place the dough in the oven for 2-3 minutes, until the pans are
+                hot, but not too hot to touch.  Let the dough rise for 15-20 minutes,
+                or until it's doubled in size.  Once it's ready, you can begin
+                assembling the filling on top of it.</d>
+            </crust>
+            <topping>
+                <direction>Pour pasta/marinara sauce on top the pizzas, spreading it
+                with a spoon.  It's up to you how much sauce you like on your pizza.</direction>
+                <direction>Sprinkle grated mozzarella cheese on top of the pizzas evenly.</direction>
+                <direction>Add vegetables to your liking.  I like to slice onions and
+                peppers thinly, then stir fry them until soft on the stove.  This way,
+                the onions caramelize in the oven.  If you decide to add greens, I
+                recommend putting them under the cheese in the pizza sauce, and you
+                may want to cut them up a bit.  For tomatoes, they're great on pizza,
+                but make sure you cut them at least in half.  Otherwise, they cook
+                weird and when you bite in, they're far more likely to burn you.</direction>
+            </topping>
+            <baking>
+                <direction>Bake on 375ºF for 18 minutes.</direction>
+                <direction>To check if your pizzas are done:  Check if the crust
+                is golden brown on the bottom, and make sure the cheese is slightly
+                browned on the top (if it gets too brown, it gets really hard to
+                chew, so if there's any question whether the cheese is done, take
+                the pizzas out).</direction>
+            </baking>
+        </directions>
+    </recipe>
+    <recipe>
         <name>Spinach Soup</name>
         <category>Soup</category>
         <ingredients>
