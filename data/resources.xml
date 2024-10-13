@@ -476,6 +476,21 @@
         </html>
     </resource>
     <resource>
+        <kind>Topic:</kind>
+        <name>Plant Pigments and Blacklight</name>
+        <details>Did you know that plant pigments like chlorophyll, xanthophyll,
+        carotenoids, and anthocyanins can fluoresce different colors underneath a
+        UV light?  Try shining a UV light on plant leaves and see which leaves
+        fluoresce more -- and what color.</details>
+        <html>
+            <div style="position: relative; width: 100%; height: 0; padding-top: 60%;">
+                <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vRIwhQwmpwKtTU7-sEarUp5cuxhVQRLn82CRuBT1oFUF6NcxMzH4c0hAl2HH3cupjhKb-NHg1VsiCzo/embed?delayms=3000"
+                        style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; border: 0;"
+                        allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+            </div>
+        </html>
+    </resource>
+    <resource>
         <kind>Warmup:</kind>
         <name>Sprouting Letters</name>
         <summary>For our warmup this month, we unscrambled veggies with our bodies.
